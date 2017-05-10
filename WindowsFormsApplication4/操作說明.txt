@@ -1,0 +1,11 @@
+﻿DPHY 參數的計算在MIPI_DPHY class
+SSD2828 的參數,FW的對應都在SSD2828 class
+
+Write Bridge Command
+
+1. private void Write_Data_To_Bridge(int Address , int Data)
+2. private void Write_Data_To_Bridge(int[] input)
+
+Read Bridge Address
+
+private int Read_Bridge(int Address)
