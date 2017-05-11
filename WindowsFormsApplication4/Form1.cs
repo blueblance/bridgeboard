@@ -16,6 +16,7 @@ using LibUsbDotNet.WinUsb;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 
 
@@ -1840,16 +1841,39 @@ namespace WindowsFormsApplication4
 
         private void btn_test_Click(object sender, EventArgs e)
         {
+            List<int[]> testini = new List<int[]>();
+            testini.Add(new int[] { 0xb7, 0x0250 });
+            testini.Add(new int[] { 0xb8, 0x0000 });
+            testini.Add(new int[] { 0xb9, 0x0000 });
+            testini.Add(new int[] { 0xba, 0xc11e });
+            testini.Add(new int[] { 0xbb, 0x0006 });
+            testini.Add(new int[] { 0xb9, 0x0001 });
+            testini.Add(new int[] { 0xc9, 0x1708 });
+            testini.Add(new int[] { 0xca, 0x3905 });
+            testini.Add(new int[] { 0xcb, 0x021e });
+            testini.Add(new int[] { 0xcc, 0x0c0e });
+            testini.Add(new int[] { 0xb9, 0x0001 });
+            testini.Add(new int[] { 0xbd, 0x0000 });
+            testini.Add(new int[] { 0xbc, 0x0000 });
+            testini.Add(new int[] { 0xde, 0x0303 });
+            Send_Actiming_To_Bridge(mipi, bridge_setting);
+            SSD2828TextBox.Text = Read_Bridge(0xb0).ToString();
+            SSD2828TextBox.Text = bridge_setting.bitrate.ToString();
+            //foreach (int[] inicode in bridge_setting.Bridge_initial())
+            foreach (int[] inicode in testini)
+            {
+                Write_Data_To_Bridge(inicode);
+                
+                SSD2828TextBox.Text += Convert.ToString(inicode[0], 16) + ' ' + Convert.ToString(inicode[1], 16) + " Read --> " + Convert.ToString(inicode[0], 16) + " = " + Convert.ToString(Read_Bridge(inicode[0]), 16) + "\n";                
+                //Thread.Sleep(500);
+            }
+            //Write_Data_To_Bridge(bridge_setting.Bridge_initial)
             //int data[] = new int[];
             byte[] data = new byte[5];
             data = Read_Driver(0x0a, 1, false);
             for(int i = 0; i < 5; i++)
             {
-                SSD2828TextBox.Text += data[i] + "\n";
-            }
-            foreach(byte d in data)
-            {
-                SSD2828TextBox.Text += d;
+                SSD2828TextBox.Text += Convert.ToString(data[i], 16) + "\n";
             }
             
 

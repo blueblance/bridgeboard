@@ -16,6 +16,7 @@ namespace WindowsFormsApplication4
         public int FR, MS, NS;//0XBA CHANGE BEFORE SET "PEN"
         public int LPD;//0XBB
         public int LS;//0XDE
+        private const int TX_CLK = 20; //Mhz
         private int Picture_mode_sel = 0;
         private int Bridge_sel = 0;
         private const int BufSize = 4096;
@@ -98,8 +99,27 @@ namespace WindowsFormsApplication4
 
         public SSD2828()
         {
+            bitrate = 600;
+            lane_cnt = 4;
             Picture_mode_sel = 0;
             Bridge_sel = 0;
+            //0xB7
+            TXD = 0;
+            LPE = 0;
+            EOT = 1;
+            ECD = 0;
+            REN = 0;
+            DCS = 1;
+            CSS = 0;
+            HCLK = 1;            
+            VEN = 0;
+            SLP = 0;                                    
+            CKE = 0;
+            HS = 0;
+
+            MS = 2;
+
+
         }
         /// <summary>
         /// 設定為Command mode
@@ -312,7 +332,32 @@ namespace WindowsFormsApplication4
             return writeBuffer;
 
         }
+        public List<int[]> Set_Bridge_Freq()
+        {
+            /*
+             * f-pre = fin / MS
+             * fout = f-pre * NS
+             * 
+             * fout = 輸出bitrate = fin / MS * NS
+             */
+            int Target_bitrate = (int)((bitrate / 5) * 5);
+            int BA = 0;
+            List<int[]> output = new List<int[]>();
 
+            if (bitrate > 62.5 && bitrate < 125)
+                FR = 0;
+            else if (bitrate >= 126 && bitrate < 250)
+                FR = 1;
+            else if (bitrate >= 251 && bitrate < 500)
+                FR = 2;
+            else if (bitrate >= 501 && bitrate < 1000)
+                FR = 3;
+           
+            NS = (Target_bitrate / (TX_CLK / MS));
+            BA = ((FR & 3) << 14 | (MS & 0x1F) << 8 | (NS & 0xFF)) & 0xFFFF;
+            output.Add(new int[] { 0xba, BA });            
+            return output;
+        }
         public List<int[]> Cal_Timing_Setting()
         {
             //List<List<int>> output = new List<List<int>>();
@@ -329,20 +374,44 @@ namespace WindowsFormsApplication4
             int CTD = (int)Math.Round((clk_trail / nibble_clk), 0, MidpointRounding.AwayFromZero);
             int HTD = (int)Math.Round((hs_trail / nibble_clk), 0, MidpointRounding.AwayFromZero);
             int WUD = (int)Math.Round((t_wakeup / ((1 / lp_clk) * 1000)), 0, MidpointRounding.AwayFromZero);
-            //int TGO = (int)Math.Round((480 / ((1 / lp_clk) )), 0, MidpointRounding.AwayFromZero);
-            //int TGET = (int)Math.Round((600 / ((1 / lp_clk))), 0, MidpointRounding.AwayFromZero);
             int TGO = 8; //4 * lp_clk (TAGO = 4倍LPTX) =  n * lp_clk/2 
             int TGET = 10; //5 * lp_clk (TAGET = 5倍LPTX) =  n * lp_clk/2 
             output.Add(new int[] { 0xc9, (HZD << 8 | HPD) & 0xffff });
             output.Add(new int[] { 0xca, (CZD << 8 | CPD) & 0xffff });
             output.Add(new int[] { 0xcb, (CPED << 8 | CPTD) & 0xffff });
             output.Add(new int[] { 0xcc, (CTD << 8 | HTD) & 0xffff });
-            output.Add(new int[] { 0xcd, (WUD) & 0xffff });
-            output.Add(new int[] { 0xce, (TGO << 8 | TGET) & 0xffff });
+            //output.Add(new int[] { 0xcd, (WUD) & 0xffff });
+            //output.Add(new int[] { 0xce, (TGO << 8 | TGET) & 0xffff });
             output.Add(new int[] { 0xbb, (LPD) & 0x003f });
 
             return output;
 
+        }
+
+        public List<int[]> Bridge_initial()
+        {
+            List<int[]> output = new List<int[]>();
+            //int B6 = (VS_P << 15 | HS_P << 14 | PCLK_P << 13 | CBM << 8 | NVB << 7 | NVD << 6 | BLLP << 5 | VCS << 4 | VM << 2 | VPF) & 0xffff;
+            int B7 = (TXD & 1) << 11 | (LPE & 1) << 10 | (EOT & 1) << 9 | (ECD & 1) << 8 | (REN & 1) << 7 | (DCS & 1) << 6 | (CSS & 1) << 5 | (HCLK & 1) << 4
+                | (VEN & 1) << 3 | (SLP & 1) << 2 | (CKE & 1) << 1 | (HS & 1);
+            int B9 = (SYSD << 14 | SYS_DIS << 13 | PEN) & 0xffff;
+            output.Add(new int[] { 0xb9, 0x00 });
+            output.Add(new int[] { 0xb7, B7 });
+            output.Add(new int[] { 0xb8, 0x00 });
+
+
+            foreach (int[] data in Set_Bridge_Freq())
+            {
+                output.Add(data);
+            }
+            foreach (int[] data in Cal_Timing_Setting())
+            {
+                output.Add(data);
+            }
+            output.Add(new int[] { 0xb9, 0x01 });
+
+            output.Add(Lane_Select(lane_cnt));
+            return output;
         }
 
         public List<int[]> Cal_Porch_Setting()

@@ -45,6 +45,11 @@
             this.Search_SD = new System.Windows.Forms.Button();
             this.btnSDIni = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.btn_0xb6 = new System.Windows.Forms.Button();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBox20 = new System.Windows.Forms.TextBox();
             this.button5 = new System.Windows.Forms.Button();
             this.m_txtbDDIInitFile = new System.Windows.Forms.TextBox();
@@ -90,6 +95,7 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.btn_test = new System.Windows.Forms.Button();
             this.textbox_bitrate = new System.Windows.Forms.TextBox();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.button6 = new System.Windows.Forms.Button();
@@ -174,12 +180,6 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.bbtnPanel = new System.Windows.Forms.Button();
             this.bbtnBRGHWReset = new System.Windows.Forms.Button();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.btn_0xb6 = new System.Windows.Forms.Button();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.btn_test = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.SD_Card_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -345,6 +345,7 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.btn_test);
             this.tabPage2.Controls.Add(this.comboBox3);
             this.tabPage2.Controls.Add(this.btn_0xb6);
             this.tabPage2.Controls.Add(this.comboBox2);
@@ -371,6 +372,74 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "SSD 2828";
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Items.AddRange(new object[] {
+            "1 lane",
+            "2 lane",
+            "3 lane",
+            "4 lane"});
+            this.comboBox3.Location = new System.Drawing.Point(526, 124);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(121, 20);
+            this.comboBox3.TabIndex = 20;
+            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
+            // 
+            // btn_0xb6
+            // 
+            this.btn_0xb6.Location = new System.Drawing.Point(422, 304);
+            this.btn_0xb6.Name = "btn_0xb6";
+            this.btn_0xb6.Size = new System.Drawing.Size(75, 23);
+            this.btn_0xb6.TabIndex = 19;
+            this.btn_0xb6.Text = "button8";
+            this.btn_0xb6.UseVisualStyleBackColor = true;
+            this.btn_0xb6.Click += new System.EventHandler(this.btn_0xb6_Click);
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "24bit",
+            "18bit",
+            "16bit"});
+            this.comboBox2.Location = new System.Drawing.Point(526, 153);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(121, 20);
+            this.comboBox2.TabIndex = 18;
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            // 
+            // checkedListBox1
+            // 
+            this.checkedListBox1.FormattingEnabled = true;
+            this.checkedListBox1.Items.AddRange(new object[] {
+            "Vsync Pulse is active high",
+            "Hsync Pulse is active high",
+            "Bridge latch data at falling",
+            "Video with no blanking packet",
+            "Data only insert in vertical blanking",
+            "Insert Data with LP mode",
+            "Burst Mode時CLK lane Always HS",
+            "Blanking區間回LP"});
+            this.checkedListBox1.Location = new System.Drawing.Point(313, 95);
+            this.checkedListBox1.Name = "checkedListBox1";
+            this.checkedListBox1.Size = new System.Drawing.Size(193, 157);
+            this.checkedListBox1.TabIndex = 17;
+            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged_1);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Pulse mode",
+            "Events mode",
+            "Burst mode"});
+            this.comboBox1.Location = new System.Drawing.Point(526, 95);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 20);
+            this.comboBox1.TabIndex = 16;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // textBox20
             // 
@@ -824,7 +893,6 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.btn_test);
             this.tabPage3.Controls.Add(this.textbox_bitrate);
             this.tabPage3.Controls.Add(this.hScrollBar1);
             this.tabPage3.Controls.Add(this.button6);
@@ -866,6 +934,16 @@
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
+            // 
+            // btn_test
+            // 
+            this.btn_test.Location = new System.Drawing.Point(422, 351);
+            this.btn_test.Name = "btn_test";
+            this.btn_test.Size = new System.Drawing.Size(75, 23);
+            this.btn_test.TabIndex = 75;
+            this.btn_test.Text = "Test Button";
+            this.btn_test.UseVisualStyleBackColor = true;
+            this.btn_test.Click += new System.EventHandler(this.btn_test_Click);
             // 
             // textbox_bitrate
             // 
@@ -1602,84 +1680,6 @@
             this.bbtnBRGHWReset.Text = "Bridge Reset";
             this.bbtnBRGHWReset.UseVisualStyleBackColor = true;
             this.bbtnBRGHWReset.Click += new System.EventHandler(this.bbtnBRGHWReset_Click);
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "24bit",
-            "18bit",
-            "16bit"});
-            this.comboBox2.Location = new System.Drawing.Point(526, 153);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 20);
-            this.comboBox2.TabIndex = 18;
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
-            // 
-            // checkedListBox1
-            // 
-            this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Items.AddRange(new object[] {
-            "Vsync Pulse is active high",
-            "Hsync Pulse is active high",
-            "Bridge latch data at falling",
-            "Video with no blanking packet",
-            "Data only insert in vertical blanking",
-            "Insert Data with LP mode",
-            "Burst Mode時CLK lane Always HS",
-            "Blanking區間回LP"});
-            this.checkedListBox1.Location = new System.Drawing.Point(313, 95);
-            this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(193, 157);
-            this.checkedListBox1.TabIndex = 17;
-            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged_1);
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Pulse mode",
-            "Events mode",
-            "Burst mode"});
-            this.comboBox1.Location = new System.Drawing.Point(526, 95);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 20);
-            this.comboBox1.TabIndex = 16;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // btn_0xb6
-            // 
-            this.btn_0xb6.Location = new System.Drawing.Point(422, 304);
-            this.btn_0xb6.Name = "btn_0xb6";
-            this.btn_0xb6.Size = new System.Drawing.Size(75, 23);
-            this.btn_0xb6.TabIndex = 19;
-            this.btn_0xb6.Text = "button8";
-            this.btn_0xb6.UseVisualStyleBackColor = true;
-            this.btn_0xb6.Click += new System.EventHandler(this.btn_0xb6_Click);
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
-            "1 lane",
-            "2 lane",
-            "3 lane",
-            "4 lane"});
-            this.comboBox3.Location = new System.Drawing.Point(526, 124);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 20);
-            this.comboBox3.TabIndex = 20;
-            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
-            // 
-            // btn_test
-            // 
-            this.btn_test.Location = new System.Drawing.Point(295, 335);
-            this.btn_test.Name = "btn_test";
-            this.btn_test.Size = new System.Drawing.Size(75, 23);
-            this.btn_test.TabIndex = 75;
-            this.btn_test.Text = "Test Button";
-            this.btn_test.UseVisualStyleBackColor = true;
-            this.btn_test.Click += new System.EventHandler(this.btn_test_Click);
             // 
             // Form1
             // 
