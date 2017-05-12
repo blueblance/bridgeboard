@@ -45,6 +45,7 @@
             this.Search_SD = new System.Windows.Forms.Button();
             this.btnSDIni = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btn_test = new System.Windows.Forms.Button();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.btn_0xb6 = new System.Windows.Forms.Button();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
@@ -95,7 +96,6 @@
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.btn_test = new System.Windows.Forms.Button();
             this.textbox_bitrate = new System.Windows.Forms.TextBox();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.button6 = new System.Windows.Forms.Button();
@@ -180,6 +180,8 @@
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.bbtnPanel = new System.Windows.Forms.Button();
             this.bbtnBRGHWReset = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.SD_Card_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -345,6 +347,8 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage2.Controls.Add(this.button8);
+            this.tabPage2.Controls.Add(this.button7);
             this.tabPage2.Controls.Add(this.btn_test);
             this.tabPage2.Controls.Add(this.comboBox3);
             this.tabPage2.Controls.Add(this.btn_0xb6);
@@ -372,6 +376,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "SSD 2828";
             this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
+            // 
+            // btn_test
+            // 
+            this.btn_test.Location = new System.Drawing.Point(422, 351);
+            this.btn_test.Name = "btn_test";
+            this.btn_test.Size = new System.Drawing.Size(75, 23);
+            this.btn_test.TabIndex = 75;
+            this.btn_test.Text = "Test Button";
+            this.btn_test.UseVisualStyleBackColor = true;
+            this.btn_test.Click += new System.EventHandler(this.btn_test_Click);
             // 
             // comboBox3
             // 
@@ -934,16 +948,6 @@
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             this.tabPage3.Click += new System.EventHandler(this.tabPage3_Click);
-            // 
-            // btn_test
-            // 
-            this.btn_test.Location = new System.Drawing.Point(422, 351);
-            this.btn_test.Name = "btn_test";
-            this.btn_test.Size = new System.Drawing.Size(75, 23);
-            this.btn_test.TabIndex = 75;
-            this.btn_test.Text = "Test Button";
-            this.btn_test.UseVisualStyleBackColor = true;
-            this.btn_test.Click += new System.EventHandler(this.btn_test_Click);
             // 
             // textbox_bitrate
             // 
@@ -1681,6 +1685,26 @@
             this.bbtnBRGHWReset.UseVisualStyleBackColor = true;
             this.bbtnBRGHWReset.Click += new System.EventHandler(this.bbtnBRGHWReset_Click);
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(422, 380);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(75, 23);
+            this.button7.TabIndex = 76;
+            this.button7.Text = "button7";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(514, 304);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(75, 23);
+            this.button8.TabIndex = 77;
+            this.button8.Text = "Bridge_RST";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1872,6 +1896,8 @@
         private System.Windows.Forms.Button btn_0xb6;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Button btn_test;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button8;
     }
 }
 

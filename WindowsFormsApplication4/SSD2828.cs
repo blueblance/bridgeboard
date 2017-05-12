@@ -270,9 +270,11 @@ namespace WindowsFormsApplication4
             writeBuffer[2] = ((byte)((Packet_length >> 8) & 0xff));
             writeBuffer[3] = ((byte)((Packet_length >> 16) & 0xff));
             writeBuffer[4] = ((byte)((Packet_length >> 24) & 0xff));
-            writeBuffer[5] = (byte)Address;
-            writeBuffer[6] = Address >= 0xb0 ? (byte)1 : (byte)0;
-            writeBuffer[8] = hs_mode ? (byte)1 : (byte)0;
+            writeBuffer[5] = (byte)(Address & 0xff);
+            //writeBuffer[6] = Address >= 0xb0 ? (byte)1 : (byte)0;
+            writeBuffer[6] = (byte)0x01;
+            //writeBuffer[8] = hs_mode ? (byte)1 : (byte)0;
+            writeBuffer[8] = (byte)0x01;
 
             switch (Get_Bridge_setting())
             {
@@ -331,6 +333,14 @@ namespace WindowsFormsApplication4
 
             return writeBuffer;
 
+        }
+
+        public byte[] Reset_Bridge()
+        {
+            byte[] writeBuffer = new byte[BufSize];
+            Array.Clear(writeBuffer, 0, BufSize);
+            writeBuffer[0] = (byte)Schedule.BRG_RESET_MSG;
+            return writeBuffer;
         }
         public List<int[]> Set_Bridge_Freq()
         {

@@ -1605,6 +1605,23 @@ namespace WindowsFormsApplication4
             return Data;
         }
 
+        private void Reset_Bridge()
+        {
+            byte[] readBuffer = new byte[Constants.BufSize];
+            //data = ReadBridge(Address);
+            //textBox20.Text = (Convert.ToString(data, 16));
+            if (DeviceWrite(Constants.BufSize, bridge_setting.Reset_Bridge()))
+            {
+
+            }
+            else
+            {
+                MessageBox.Show("Write Error.");
+                UsbDevice.Exit();
+            }
+            
+        }
+
         private byte[] Read_Driver(int Address , int Packet_Size , bool hs_mode) 
         {            
             byte[] readBuffer = new byte[Constants.BufSize];
@@ -1869,14 +1886,51 @@ namespace WindowsFormsApplication4
             }
             //Write_Data_To_Bridge(bridge_setting.Bridge_initial)
             //int data[] = new int[];
-            byte[] data = new byte[5];
-            data = Read_Driver(0x0a, 1, false);
-            for(int i = 0; i < 5; i++)
-            {
-                SSD2828TextBox.Text += Convert.ToString(data[i], 16) + "\n";
-            }
-            
 
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            //byte[] data = new byte[5];
+            //data = Read_Driver(0x0a, 1, false);
+            //for (int i = 0; i < 5; i++)
+            //{
+            //    SSD2828TextBox.Text += Convert.ToString(data[i], 16) + "\n";
+            //}
+            //if((Read_Bridge(0xc6) & 0x0001) != 0)
+            //{
+            //    SSD2828TextBox.Text = "RDR is full";
+            //    SSD2828TextBox.Text += Read_Bridge(0xc2).ToString() + "\n";
+            //    SSD2828TextBox.Text += Read_Bridge(0xFF).ToString() + "\n";
+            //    return;
+            //}
+
+            List<int[]> testini = new List<int[]>();
+            testini.Add(new int[] { 0xb7, 0x0382 });
+            testini.Add(new int[] { 0xbc, 0x0001 });
+            testini.Add(new int[] { 0xbf, 0x0a });
+            testini.Add(new int[] { 0xb7, 0x0302 });
+            foreach (int[] inicode in testini)
+            {
+                Write_Data_To_Bridge(inicode);
+                
+                Thread.Sleep(1);
+            }
+
+            int RDR = Read_Bridge(0xc6) & 0x0001;
+
+            if(RDR == 1)
+            {
+                SSD2828TextBox.Text += Read_Bridge(0xc2).ToString() + "\n";
+                SSD2828TextBox.Text += Read_Bridge(0xFF).ToString() + "\n";
+
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            Reset_Bridge();
         }
 
         /// <summary>
